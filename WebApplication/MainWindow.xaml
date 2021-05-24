@@ -1,0 +1,210 @@
+﻿<Window x:Class="MongoDBTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MongoDBTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="525">
+    <Window.Resources>
+        <SolidColorBrush x:Key="BrushWatermarkBackground" Color="White" />
+        <SolidColorBrush x:Key="BrushWatermarkForeground" Color="Gray" />
+        <SolidColorBrush x:Key="BrushWatermarkBorder" Color="Indigo" />
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
+
+        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="20,0" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="LightBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="6"
+               Content="Chat Sentimental Analyzer" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="24" FontWeight="Bold"
+        >
+        </Label>
+        <Label Grid.Row="2" Grid.Column="1"
+               Content="Sign In" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="18" FontWeight="SemiBold"
+        >
+        </Label>
+        <Label Grid.Row="3" Grid.Column="1"
+               Name="SignInError"
+               Content="" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+               FontSize="8" FontWeight="SemiBold" Foreground="Red"
+               Margin="10,0,0,0"
+        >
+        </Label>
+        <Label Grid.Row="4" Grid.Column="1"
+               Content="Username:" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+               FontSize="12" FontWeight="SemiBold"
+               Margin="10,0,0,0"
+        >
+        </Label>
+        <TextBox Grid.Row="5" Grid.Column="1"
+                 Name="SignInUsername"
+                 VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                 Height="30"
+                 Margin="15,0,0,0"
+        >
+        </TextBox>
+        <Label Grid.Row="6" Grid.Column="1"
+               Content="Password:" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+               FontSize="12" FontWeight="SemiBold"
+               Margin="10,0,0,0"
+        >
+        </Label>
+        <PasswordBox Grid.Row="7" Grid.Column="1"
+                 Name="SignInPassword"
+                 VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                 Height="30"
+                 Margin="15,0,0,0"
+        >
+        </PasswordBox>
+        <CheckBox Grid.Row="8" Grid.Column="1"
+                  Content="Remember Me" VerticalContentAlignment="Center"      
+                  Margin="15,0,0,0"
+        >
+        </CheckBox>
+        <Button Grid.Row="9" Grid.Column="1"
+                Content="Sign In" Margin="40,5,20,5"
+                Click="SignIn"
+        >
+        </Button>
+        <StackPanel Grid.Row="2" Grid.Column="2" Grid.RowSpan = "8" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    >
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />            
+        </StackPanel>
+        <Label Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"
+               Content="Sign Up" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="18" FontWeight="SemiBold"
+        >
+        </Label>
+        <Label Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2"
+               Name="SignUpError"
+               Content="" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+               FontSize="8" FontWeight="SemiBold" Foreground="Red"
+               Margin="10,0,0,0"
+        >
+        </Label>
+        <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan = "2" 
+              Background="{StaticResource BrushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,5" Text="Enter First Name:"
+                       Foreground="{StaticResource BrushWatermarkForeground}" 
+            >
+                <TextBlock.Visibility>
+                    <MultiBinding Converter="{StaticResource TextInputToVisibilityConverter}">
+                        <Binding ElementName="SignUpFirstName" Path="Text.IsEmpty" />
+                        <Binding ElementName="SignUpFirstName" Path="IsFocused" />
+                    </MultiBinding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <TextBox
+                VerticalContentAlignment="Center"
+                Height="30"
+                Name="SignUpFirstName" Background="Transparent" BorderBrush="{StaticResource BrushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan = "2" 
+              Background="{StaticResource BrushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,5" Text="Enter Last Name:"
+                       Foreground="{StaticResource BrushWatermarkForeground}" 
+            >
+                <TextBlock.Visibility>
+                    <MultiBinding Converter="{StaticResource TextInputToVisibilityConverter}">
+                        <Binding ElementName="SignUpLastName" Path="Text.IsEmpty" />
+                        <Binding ElementName="SignUpLastName" Path="IsFocused" />
+                    </MultiBinding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <TextBox
+                VerticalContentAlignment="Center"
+                Height="30"
+                Name="SignUpLastName" Background="Transparent" BorderBrush="{StaticResource BrushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Row="6" Grid.Column="3" Grid.ColumnSpan = "2" 
+              Background="{StaticResource BrushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,5" Text="Enter Email:"
+                       Foreground="{StaticResource BrushWatermarkForeground}" 
+            >
+                <TextBlock.Visibility>
+                    <MultiBinding Converter="{StaticResource TextInputToVisibilityConverter}">
+                        <Binding ElementName="SignUpEmail" Path="Text.IsEmpty" />
+                        <Binding ElementName="SignUpEmail" Path="IsFocused" />
+                    </MultiBinding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <TextBox
+                VerticalContentAlignment="Center"
+                Height="30"
+                Name="SignUpEmail" Background="Transparent" BorderBrush="{StaticResource BrushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Row="7" Grid.Column="3" Grid.ColumnSpan = "2" 
+              Background="{StaticResource BrushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,5" Text="Enter Username:"
+                       Foreground="{StaticResource BrushWatermarkForeground}" 
+            >
+                <TextBlock.Visibility>
+                    <MultiBinding Converter="{StaticResource TextInputToVisibilityConverter}">
+                        <Binding ElementName="SignUpUsername" Path="Text.IsEmpty" />
+                        <Binding ElementName="SignUpUsername" Path="IsFocused" />
+                    </MultiBinding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <TextBox
+                VerticalContentAlignment="Center"
+                Height="30"
+                Name="SignUpUsername" Background="Transparent" BorderBrush="{StaticResource BrushWatermarkBorder}" />
+        </Grid>
+        <Grid Grid.Row="8" Grid.Column="3" Grid.ColumnSpan = "2" 
+              Background="{StaticResource BrushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+            <TextBlock Margin="5,5" Text="Enter Password:"
+                       Foreground="{StaticResource BrushWatermarkForeground}" 
+            >
+                <TextBlock.Visibility>
+                    <MultiBinding Converter="{StaticResource TextInputToVisibilityConverter}">
+                        <Binding ElementName="SignUpPassword" Path="Text.IsEmpty" />
+                        <Binding ElementName="SignUpPassword" Path="IsFocused" />
+                    </MultiBinding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <PasswordBox
+                Height="30"
+                VerticalContentAlignment="Center"
+                Name="SignUpPassword" Background="Transparent" BorderBrush="{StaticResource BrushWatermarkBorder}" />
+        </Grid>
+       
+        <Button Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2"
+                Content="Sign Up" Margin="50,5,50,5"
+                Click="SignUp"
+        >
+        </Button>
+    </Grid>
+</Window>
